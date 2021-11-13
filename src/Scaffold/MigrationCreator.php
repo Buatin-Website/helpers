@@ -54,22 +54,11 @@ class MigrationCreator extends BaseMigrationCreator
      */
     protected function populateStub($name, $stub, $table)
     {
-        $stub = str_replace(
-            ['DummyClass', '{{ class }}', '{{class}}'],
-            $this->getClassName($name), $stub
+        return str_replace(
+            ['DummyClass', 'DummyTable', 'DummyStructure'],
+            [$this->getClassName($name), $table, $this->bluePrint],
+            $stub
         );
-
-        // Here we will replace the table place-holders with the table specified by
-        // the developer, which is useful for quickly creating a tables creation
-        // or update migration from the console instead of typing it manually.
-        if (! is_null($table)) {
-            $stub = str_replace(
-                ['DummyTable', '{{ table }}', '{{table}}'],
-                $table, $stub
-            );
-        }
-
-        return $stub;
     }
 
     /**
